@@ -10,3 +10,13 @@
 	margin-bottom: 1em;
 	color: makerGreen;
 }
+
+.cards {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0.5em 2em;
+	margin: 0;
+}
