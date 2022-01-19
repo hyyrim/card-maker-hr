@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-const Footer = (props) => (
+const Footer = memo((props) => (
 	<footer className={styles.footer}>
 		<p className={styles.name}>Github</p>
 		<a
@@ -15,6 +15,6 @@ const Footer = (props) => (
 			{/* <i class="fab fa-github"></i> */}
 		</a>
 	</footer>
-);
+));
 
 export default Footer;
