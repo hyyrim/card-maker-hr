@@ -24,20 +24,18 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
 			setCards(cards);
 		});
 		return () => stopSync();
-	}, [userId]);
+	}, [userId, cardRepository]);
 
 	// 로그인
 	useEffect(() => {
 		authService.onAuthChange((user) => {
 			if (user) {
 				setUserId(user.uid);
-				console.log(userId);
-				console.log(user.uid);
 			} else {
 				history.push('/');
 			}
 		});
-	});
+	}, [authService]);
 
 	const createOrUpdate = (card) => {
 		setCards((cards) => {
