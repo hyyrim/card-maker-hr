@@ -31,7 +31,10 @@ const ImageFileInput = ({ imageUploader, fileName, onFileChange }) => {
 				onChange={onChange}
 			/>
 			{!loading && (
-				<button className={styles.button} onClick={onButtonClick}>
+				<button
+					className={`${styles.button} ${fileName ? styles.pink : styles.grey}`}
+					onClick={onButtonClick}
+				>
 					{fileName || 'No file'}
 				</button>
 			)}

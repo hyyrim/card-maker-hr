@@ -6,50 +6,34 @@ import Header from '../header/header';
 import Preview from '../preview/preview';
 import styles from './maker.module.css';
 
-const Maker = ({ FileInput, authService }) => {
-	const [cards, setCards] = useState({
-		1: {
-			id: '1',
-			name: 'Hyerim',
-			company: 'home',
-			theme: 'light',
-			title: 'Fronted-Developer',
-			email: 'hyyrim@gmail.com',
-			message: 'go for it',
-			fileName: null,
-			fileURL: null,
-		},
-		2: {
-			id: '2',
-			name: 'Hyerim',
-			company: 'home',
-			theme: 'dark',
-			title: 'Fronted-Developer',
-			email: 'hyyrim@gmail.com',
-			message: 'go for it',
-			fileName: null,
-			fileURL: null,
-		},
-		3: {
-			id: '3',
-			name: 'Hyerim',
-			company: 'home',
-			theme: 'colorful',
-			title: 'Fronted-Developer',
-			email: 'hyyrim@gmail.com',
-			message: 'go for it',
-			fileName: null,
-			fileURL: null,
-		},
-	});
+const Maker = ({ FileInput, authService, cardRepository }) => {
 	const history = useHistory();
+	const historyState = history.location.state;
+	const [cards, setCards] = useState({});
+	const [userId, setUserId] = useState(historyState && historyState.id);
 	const onLogout = () => {
 		authService.logout();
 	};
 
+	// sync cards
+	useEffect(() => {
+		if (!userId) {
+			return;
+		}
+		const stopSync = cardRepository.syncCards(userId, (cards) => {
+			setCards(cards);
+		});
+		return () => stopSync();
+	}, [userId]);
+
+	// 로그인
 	useEffect(() => {
 		authService.onAuthChange((user) => {
-			if (!user) {
+			if (user) {
+				setUserId(user.uid);
+				console.log(userId);
+				console.log(user.uid);
+			} else {
 				history.push('/');
 			}
 		});
@@ -61,6 +45,7 @@ const Maker = ({ FileInput, authService }) => {
 			updated[card.id] = card;
 			return updated;
 		});
+		cardRepository.saveCard(userId, card);
 	};
 
 	const onDelete = (card) => {
@@ -69,6 +54,7 @@ const Maker = ({ FileInput, authService }) => {
 			delete updated[card.id];
 			return updated;
 		});
+		cardRepository.removeCard(userId, card);
 	};
 
 	return (

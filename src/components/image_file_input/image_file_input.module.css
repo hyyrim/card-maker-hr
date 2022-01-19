@@ -1,4 +1,4 @@
-@value makerLightGrey,makerPink from '../../common/colors.css';
+@value makerLightGrey,makerPink, makerLightPink from '../../common/colors.css';
 
 .container {
 	width: 100%;
@@ -21,6 +21,14 @@
 	border: 0;
 	outline: 0;
 	font-size: 0.8rem;
+}
+
+.button.grey {
+	background-color: makerLightGrey;
+}
+
+.button.pink {
+	background-color: makerLightPink;
 }
 
 .loading {
